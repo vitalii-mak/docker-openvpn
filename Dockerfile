@@ -1,8 +1,7 @@
 FROM alpine:3.8
 MAINTAINER Vitalii Makarchenkov <vitalii.mak@gmail.com>
 
-RUN apk update && apk upgrade && apk add openvpn easy-rsa && \
-    ln -s /usr/share/easy-rsa/easyrsa /usr/local/bin && \
+RUN apk update && apk upgrade && apk add openvpn && \
     rm -rf /var/cashe/apk/* && \
     adduser -S -u 3333 -G openvpn vpnuser
 
