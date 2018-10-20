@@ -1,38 +1,17 @@
 # docker-openvpn
 
-Generate Diffie hellman key
-openssl dhparam -out dh2048.pem 2048
+[Create a Public Key Infrastructure Using the easy-rsa Scripts](https://wiki.gentoo.org/wiki/Create_a_Public_Key_Infrastructure_Using_the_easy-rsa_Scripts)
 
-Create Certificate Authority
-Generate private key for Certificate Authority (-des3 - add password)
-openssl genrsa -out ca.key 2048
-chmod 600 ca.key
+openvpn.conf
 
-Generate certificate for Certificate Authority
-openssl req -new -x509 -days 3650 -key ca.key -out ca.crt
+Copy all keys into folder keys/
 
+| config openvpn| easy-rsa  |
+|-----------|-----------|
+| ca        | ca.crt    |
+| cert      | easy-rsa/pki/issued/servername.crt |
+| key       | easy-rsa/pki/private/servername.key |
+| dh        | dh.pem    |
+| tls-auth  | ta.key    |
 
-Generate private key for openvpn server
-openssl genrsa -out server.key 2048
-chmod 600 server.key
-
-Generate public certificate for openvpn server
-openssl req -new -key server.key -out server.csr
-
-Generate certificate for openvpn server
-openssl x509 -req -in server.csr -out server.crt -signkey server.key -days 3650
-
-Create an "HMAC firewall" to help block DoS attacks and UDP port flooding. 
-config - tls-auth ta.key 0
-openvpn --genkey --secret ta.key
-
-Generate private key for client
-openssl genrsa -out client.key 2048
-
-Generate public certificate for client
-openssl req -new -key client.key -out client.csr
-
-
-openssl rsa -in client.key. -out client.pem
-
-openssl x509 -req -days 365 -in client.csr -CA yourawesomeCA.pem -CAkey yourawesomeCA.key -out client.crt
+Change port 1194 in openvpn.conf, Dockerfile and docker-compose.yml

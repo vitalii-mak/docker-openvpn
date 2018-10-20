@@ -1,7 +1,6 @@
 version: '3.2'
 services:
   openvpn:
-    # image: vitaliimak/openvpn
     build: .
     container_name: openvpn
     cap_add:
@@ -9,16 +8,9 @@ services:
     ports:
       - "1194:1194/udp"
     volumes:
-      # - type: volume
-      #   source: config
-      #   target: /etc/openvpn
       - type: bind
         source: ./config
         target: /etc/openvpn/config
       - type: bind
         source: ./keys
         target: /etc/openvpn/keys
-    # command: openvpn --config /etc/openvpn/config/openvpn.conf
-
-# volumes:
-#   config:

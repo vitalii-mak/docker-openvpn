@@ -3,22 +3,16 @@ MAINTAINER Vitalii Makarchenkov <vitalii.mak@gmail.com>
 
 RUN apk update && apk upgrade && apk add openvpn && \
     rm -rf /var/cashe/apk/* && \
-    mkdir -p /etc/openvpn/keys /etc/openvpn/config
-    # adduser -S -u 3333 -G openvpn vpnuser
+    mkdir -p /etc/openvpn/keys /etc/openvpn/config /var/log/openvpn
 
 COPY ./bin /usr/local/bin
-#COPY ./keys /etc/openvpn
 
 RUN chmod a+x /usr/local/bin/run.sh
 
-#VOLUME ["/etc/openvpn"]
+VOLUME ["/var/log/openvpn"]
 
-EXPOSE 1194/udp 443/tcp
+EXPOSE 1194/udp
 
 WORKDIR /etc/openvpn
 
 CMD ["run.sh"]
-
-# USER vpnuser
-
-# WORKDIR /home/vpnuser
